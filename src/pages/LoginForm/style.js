@@ -4,6 +4,7 @@ export const Login = styled.div`
   .container-login {
     display: flex;
     flex-direction: column;
+    max-width: 450px;
     width: 369px;
     height: 530px;
     background: #212529;

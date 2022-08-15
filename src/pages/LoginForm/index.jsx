@@ -1,56 +1,15 @@
-import { useForm } from "react-hook-form";
-import api from "../../services/api";
 import Logo from "./Logo.png";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.js";
-import { Link, useNavigate } from "react-router-dom";
-import { formSchemaLogin } from "../../validators/userLogin";
+import { Link } from "react-router-dom";
 import { Login } from "./style.js";
+import { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 
 function LoginForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(formSchemaLogin) });
-
-  function Notify() {
-    return toast.error("Preencha Todos os campos");
-  }
-
-  const navigate = useNavigate();
-
-  const handleLogin = (user) => {
-    const id = toast.loading("Please wait...");
-
-    api
-      .post("/sessions", { ...user })
-      .then((res) => {
-        if (res.status !== 401) {
-          setTimeout(() => navigate("/dashboard"), 2000);
-        }
-
-        window.localStorage.clear();
-        window.localStorage.setItem("@TOKEN", res.data.token);
-        window.localStorage.setItem("@USER", JSON.stringify(res.data.user));
-        toast.update(id, {
-          render: "Logado com sucesso",
-          type: "success",
-          isLoading: false,
-          autoClose: 2000,
-        });
-      })
-      .catch((err) => {
-        toast.update(id, {
-          render: "Senha/Email invalidos",
-          type: "error",
-          isLoading: false,
-          autoClose: 3000,
-        });
-      });
-  };
+  const { handleSubmit, register, errors, Notify, handleLogin } =
+    useContext(UserContext);
 
   return (
     <>

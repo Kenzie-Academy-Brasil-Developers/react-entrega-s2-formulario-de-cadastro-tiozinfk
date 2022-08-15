@@ -1,11 +1,19 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import AddModal from "../../components/AddModal";
+import TechsList from "../../components/TechList";
+import { UserContext } from "../../Context/UserContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./style.js";
+
 import Logo from "./Logo.png";
-import { DashboardF, NotAuthenticate } from "./style.js";
+import { ContainerDash, NotAuthenticate } from "./style.js";
 
 function Dashboard() {
   const token = window.localStorage.getItem("@TOKEN");
-  const user = window.localStorage.getItem("@USER");
-  const userObj = JSON.parse(user);
+
+  const { isModalVisible, setIsModalVisible, user } = useContext(UserContext);
 
   if (!token) {
     return (
@@ -28,29 +36,48 @@ function Dashboard() {
     );
   } else {
     return (
-      <>
-        <DashboardF>
-          <div className="divDash">
-            <header>
-              <img src={Logo} alt="logoKenzie" />
+      <ContainerDash>
+        <ToastContainer />
+        <div className="all-dashboard">
+          <header className="header-dashboard">
+            <div className="container">
+              <img src={Logo} alt="LogoDashboard" />
               <Link to={"/"}>
-                <button onClick={() => localStorage.clear()}>Sair</button>
+                <button
+                  onClick={() => localStorage.clear()}
+                  className="btn-exit"
+                >
+                  Sair
+                </button>
               </Link>
-            </header>
-            <section>
-              <h1>Olá, {userObj.name}</h1>
-              <span>{userObj.course_module}</span>
-            </section>
-            <div>
-              <h2>Que pena! Estamos em desenvolvimento :(</h2>
-              <p>
-                Nossa aplicação está em desenvolvimento, em breve teremos
-                novidades
-              </p>
             </div>
-          </div>
-        </DashboardF>
-      </>
+          </header>
+
+          <section className="section-dashboard">
+            <div className="section-itens">
+              <h3>Olá, {user.name} </h3>
+              <h3>{user.course_module}</h3>
+            </div>
+          </section>
+
+          <div className="modal">{isModalVisible ? <AddModal /> : null}</div>
+          <main className="main-dashboard">
+            <div className="header-techs">
+              <h1>Tecnologias</h1>
+              <button
+                className="btn-Add"
+                onClick={() => setIsModalVisible(true)}
+              >
+                +
+              </button>
+            </div>
+
+            <div className="list-techs">
+              <TechsList />
+            </div>
+          </main>
+        </div>
+      </ContainerDash>
     );
   }
 }

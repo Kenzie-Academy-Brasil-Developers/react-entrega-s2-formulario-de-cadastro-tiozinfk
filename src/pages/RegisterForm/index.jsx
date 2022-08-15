@@ -1,61 +1,15 @@
-import { useForm } from "react-hook-form";
-import api from "../../services/api";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Logo from "./Logo.png";
 import "react-toastify/dist/ReactToastify.css";
-
-import { Link, useNavigate } from "react-router-dom";
-import { formSchema } from "../../validators/userRegister";
+import { Link } from "react-router-dom";
 import { Register } from "./style.js";
-
-function Notify() {
-  if (Error) {
-    return toast.error("Preencha Todos os campos");
-  }
-}
+import { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 
 function RegisterForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(formSchema),
-  });
-
-  window.localStorage.clear();
-
-  const navigate = useNavigate();
-
-  const onSubmitF = (data) => {
-    const id = toast.loading("Please wait...");
-
-    api
-
-      .post("/users", data)
-      .then((response) => {
-        if (response.status !== 401) {
-          setTimeout(() => navigate("/"), 2000);
-        }
-
-        toast.update(id, {
-          render: "Cadastro efetuado com sucesso",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
-      })
-      .catch((err) => {
-        toast.update(id, {
-          render: "O usuario ja existe",
-          type: "error",
-          isLoading: false,
-          autoClose: 2000,
-        });
-      });
-  };
+  const { NotifyRegister, register, handleSubmit, errors, onSubmitF } =
+    useContext(UserContext);
 
   return (
     <>
@@ -75,7 +29,7 @@ function RegisterForm() {
             <p>Rapido e gratis, Vamos nessa!</p>
           </div>
           <div className="input">
-            <form onSubmit={handleSubmit(onSubmitF, Notify)}>
+            <form onSubmit={handleSubmit(onSubmitF, NotifyRegister)}>
               <label htmlFor="name">Nome *</label>
               <input
                 type="text"
