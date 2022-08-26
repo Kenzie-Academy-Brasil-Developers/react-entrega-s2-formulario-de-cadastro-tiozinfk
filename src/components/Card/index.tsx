@@ -4,7 +4,7 @@ import { FiTrash2 } from "react-icons/fi";
 
 import Container from "./style";
 
-const Card = ({ tech }) => {
+const Card = ({ tech }: any) => {
   const { deleteTech } = useContext(UserContext);
 
   return (

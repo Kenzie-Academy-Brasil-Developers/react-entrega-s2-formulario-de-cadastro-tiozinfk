@@ -3,14 +3,33 @@ import "react-toastify/dist/ReactToastify.css";
 import Logo from "./Logo.png";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
-import { Register } from "./style.js";
+import { Register } from "./style";
 import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
+import { formSchema } from "../../validators/userRegister";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
+interface FormValues {
+  erros: string;
+  name: string;
+  email: string;
+  password: string;
+  ConfirmPassword: string;
+  bio: string;
+  contact: number;
+  course_module: string;
+}
 
 function RegisterForm() {
-  const { NotifyRegister, register, handleSubmit, errors, onSubmitF } =
-    useContext(UserContext);
-
+  const { NotifyRegister, onSubmitF } = useContext(UserContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(formSchema),
+  });
   return (
     <>
       <Register>

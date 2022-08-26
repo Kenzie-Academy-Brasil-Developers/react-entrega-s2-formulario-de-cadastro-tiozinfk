@@ -1,19 +1,58 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { createContext, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import api from "../../services/api";
-import { formSchemaLogin } from "../../validators/userLogin";
-export const UserContext = createContext({});
 
-export function UserProvider({ children }) {
+export interface userContextProps {
+  children: ReactNode;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  course_module: string;
+  techs?: string[];
+}
+
+export interface UserData {
+  tittle: string;
+  status: string;
+}
+
+interface UserLogin {
+  email: string;
+  password: string;
+}
+
+interface ITechs {
+  tittle: string;
+  status: string;
+  id: string;
+}
+
+interface useContext {
+  CreateTech: (data: UserData) => void;
+  deleteTech: (techId: ITechs[]) => void;
+  handleLogin: (user: UserLogin) => void;
+  NotifyRegister: () => void;
+  onSubmitF: (data: any) => void;
+  Notify: () => void;
+  user: IUser;
+  isModalVisible: boolean;
+  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  loadUser: () => void;
+  techs: ITechs[];
+}
+
+export const UserContext = createContext<useContext>({} as useContext);
+
+export const UserProvider = ({ children }: userContextProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [techs, setTech] = useState([]);
-
-  const [user, setUser] = useState([]);
+  const [techs, setTech] = useState<ITechs[]>([]);
+  const [user, setUser] = useState<IUser>({} as IUser);
 
   const navigate = useNavigate();
 
@@ -22,8 +61,9 @@ export function UserProvider({ children }) {
 
     if (token) {
       try {
-        api.defaults.headers.authorization = `Bearer ${token}`;
+        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         const { data } = await api.get("/profile");
+
         setUser(data);
         setTech(data.techs);
       } catch (error) {
@@ -36,7 +76,10 @@ export function UserProvider({ children }) {
     loadUser();
   });
 
-  function CreateTech(data) {
+  function CreateTech(data: UserData) {
+    const token = localStorage.getItem("@TOKEN");
+
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     api
       .post(
         "/users/techs",
@@ -44,9 +87,6 @@ export function UserProvider({ children }) {
         {
           title: data.tittle,
           status: data.status,
-        },
-        {
-          headers: `Bearer ${localStorage.getItem("@TOKEN")}`,
         }
       )
       .then((res) => {
@@ -60,9 +100,9 @@ export function UserProvider({ children }) {
       });
   }
 
-  async function deleteTech(techId) {
+  async function deleteTech(techId: ITechs[]) {
     const token = localStorage.getItem("@TOKEN");
-    api.defaults.headers.authorization = `Bearer ${token}`;
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await api
       .delete(`/users/techs/${techId}`)
       .then((res) => toast.success("Tecnologia Excluida com sucesso"))
@@ -72,7 +112,7 @@ export function UserProvider({ children }) {
       });
   }
 
-  const handleLogin = (user) => {
+  const handleLogin = (user: UserLogin) => {
     const id = toast.loading("Please wait...");
 
     api
@@ -102,12 +142,6 @@ export function UserProvider({ children }) {
       });
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(formSchemaLogin) });
-
   function Notify() {
     return toast.error("Preencha Todos os campos");
   }
@@ -115,12 +149,10 @@ export function UserProvider({ children }) {
   // => REGISTRO DO USUARIO //
 
   function NotifyRegister() {
-    if (Error) {
-      return toast.error("Preencha Todos os campos");
-    }
+    toast.error("Preencha Todos os campos");
   }
 
-  const onSubmitF = (data) => {
+  const onSubmitF = (data: any) => {
     const id = toast.loading("Please wait...");
 
     api
@@ -151,9 +183,6 @@ export function UserProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
-        register,
-        handleSubmit,
-        errors,
         Notify,
         handleLogin,
         NotifyRegister,
@@ -170,4 +199,4 @@ export function UserProvider({ children }) {
       {children}
     </UserContext.Provider>
   );
-}
+};

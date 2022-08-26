@@ -5,34 +5,31 @@ import TechsList from "../../components/TechList";
 import { UserContext } from "../../Context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./style.js";
-
+import "./style.ts";
+import { ContainerDash, NotAuthenticate } from "./style";
 import Logo from "./Logo.png";
-import { ContainerDash, NotAuthenticate } from "./style.js";
 
 function Dashboard() {
-  const token = window.localStorage.getItem("@TOKEN");
+  const token = localStorage.getItem("@TOKEN");
 
   const { isModalVisible, setIsModalVisible, user } = useContext(UserContext);
 
   if (!token) {
     return (
-      <>
-        <NotAuthenticate>
-          <div>
-            <h1>Você nao esta logado!</h1>
-            <span>Ja possui uma conta ?</span>
-            <Link to={"/"}>
-              <button> Logar</button>
-            </Link>
+      <NotAuthenticate>
+        <div>
+          <h1>Você nao esta logado!</h1>
+          <span>Ja possui uma conta?</span>
+          <Link to={"/"}>
+            <button> Logar</button>
+          </Link>
 
-            <span>Crie uma conta !</span>
-            <Link to={"/cadastro"}>
-              <button> Registrar</button>
-            </Link>
-          </div>
-        </NotAuthenticate>
-      </>
+          <span>Crie uma conta !</span>
+          <Link to={"/cadastro"}>
+            <button> Registrar</button>
+          </Link>
+        </div>
+      </NotAuthenticate>
     );
   } else {
     return (

@@ -1,15 +1,21 @@
 import { useContext } from "react";
-import { UserContext } from "../../Context/UserContext";
+import { UserContext, UserData } from "../../Context/UserContext";
 import { useForm } from "react-hook-form";
 
 import Container from "./style";
 import { formSchemaAdd } from "../../validators/addTech";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+interface UserForm {
+  data: UserData;
+  tittle: string;
+  status: string;
+}
+
 function AddModal() {
   const { CreateTech, setIsModalVisible } = useContext(UserContext);
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm<UserForm>({
     resolver: yupResolver(formSchemaAdd),
   });
 
@@ -31,11 +37,10 @@ function AddModal() {
               <input
                 id="title"
                 {...register("tittle")}
-                label="Nome"
                 placeholder="Tecnologia"
               />
 
-              <select name="status" id="status" {...register("status")}>
+              <select id="status" {...register("status")}>
                 <option value="Iniciante">Iniciante</option>
                 <option value="Intermediário">Intermediario</option>
                 <option value="Avançado">Avançado</option>
