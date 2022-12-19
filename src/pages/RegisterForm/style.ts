@@ -1,10 +1,18 @@
 import styled from "styled-components";
 
 export const Register = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1rem;
+  height: 100vh;
+
   form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     box-sizing: border-box;
   }
 
@@ -50,16 +58,32 @@ export const Register = styled.div`
     background: #59323f;
     border: 1.2182px solid #59323f;
     border-radius: 4px;
+    margin-top: 1rem;
     margin-bottom: 10px;
     color: white;
     font-family: "Inter", sans-serif;
+    cursor: pointer;
+  }
+
+  .error {
+    box-sizing: border-box;
+    height: 45px;
+    width: 329.92877197265625px;
+    background: #343b41;
+
+    border-radius: 4px;
+    color: white;
+    font-family: "Inter", sans-serif;
+    border: 1.2182px solid red;
+    box-shadow: 0 0 0 0;
+    outline: 0;
   }
 
   .container {
     box-sizing: border-box;
     background: #212529;
     width: 370px;
-    max-height: 500px;
+    max-height: 520px;
     align-items: center;
     overflow-y: auto;
     display: flex;
@@ -96,8 +120,8 @@ export const Register = styled.div`
 
   .header {
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 30px;
+    justify-content: space-around;
+    gap: 5rem;
     align-items: center;
   }
 
@@ -106,6 +130,7 @@ export const Register = styled.div`
     width: 67.48529052734375px;
     background: #212529;
     border-radius: 4px;
+    border: none;
     color: white;
     font-family: "Inter", sans-serif;
   }

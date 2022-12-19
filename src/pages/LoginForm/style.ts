@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 export const Login = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+
   .container-login {
     display: flex;
     flex-direction: column;
@@ -44,11 +50,34 @@ export const Login = styled.div`
   .cadastro-login button {
     width: 324px;
     height: 48px;
-    background: #868e96;
-
+    background: #bf3b3b;
+    cursor: pointer;
     border: 1.2182px solid #868e96;
     border-radius: 4px;
     font-family: "Inter", sans-serif;
+  }
+
+  .form-error input {
+    display: flex;
+    box-sizing: border-box;
+    height: 45px;
+    width: 329.92877197265625px;
+    background: #343b41;
+    border: 1.2182px solid red;
+    border-radius: 4px;
+    color: white;
+    font-family: "Inter", sans-serif;
+  }
+
+  .form-error input:focus {
+    border: 1.2182px solid red;
+    box-shadow: 0 0 0 0;
+    outline: 0;
+  }
+
+  .cadastro-login button:hover {
+    background: #c91c1c;
+    transition: all 1s ease;
   }
 
   .inputs-div input {

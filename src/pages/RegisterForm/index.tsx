@@ -51,6 +51,7 @@ function RegisterForm() {
             <form onSubmit={handleSubmit(onSubmitF, NotifyRegister)}>
               <label htmlFor="name">Nome *</label>
               <input
+                className={errors.name ? "error" : ""}
                 type="text"
                 id="name"
                 placeholder="Ex: Rian"
@@ -59,6 +60,7 @@ function RegisterForm() {
               <span>{errors.name?.message}</span>
               <label htmlFor="email">Email *</label>
               <input
+                className={errors.email ? "error" : ""}
                 type="text"
                 id="email"
                 placeholder="Ex: email@email.com"
@@ -66,20 +68,32 @@ function RegisterForm() {
               />
               <span>{errors.email?.message}</span>
               <label htmlFor="senha">Senha *</label>
-              <input type="password" id="senha" {...register("password")} />
+              <input
+                className={errors.password ? "error" : ""}
+                type="password"
+                id="senha"
+                {...register("password")}
+              />
               <span className="errorPassword"> {errors.password?.message}</span>
               <label htmlFor="confirmarSenha">Confirme a senha *</label>
               <input
+                className={errors.ConfirmPassword ? "error" : ""}
                 type="password"
                 id="confirmarSenha"
                 {...register("ConfirmPassword")}
               />
               <span> {errors.ConfirmPassword?.message}</span>
               <label htmlFor="bio">Bio *</label>
-              <input type="text" id="bio" {...register("bio")} />
+              <input
+                className={errors.bio ? "error" : ""}
+                type="text"
+                id="bio"
+                {...register("bio")}
+              />
               <span> {errors.bio?.message}</span>
               <label htmlFor="contato">Telefone *</label>
               <input
+                className={errors.contact ? "error" : ""}
                 type="tel"
                 id="contato"
                 placeholder="(99) 99999-9999"

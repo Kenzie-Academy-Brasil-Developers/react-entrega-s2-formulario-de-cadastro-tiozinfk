@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddModal from "../../components/AddModal";
 import TechsList from "../../components/TechList";
@@ -35,45 +35,38 @@ function Dashboard() {
     return (
       <ContainerDash>
         <ToastContainer />
-        <div className="all-dashboard">
-          <header className="header-dashboard">
-            <div className="container">
-              <img src={Logo} alt="LogoDashboard" />
-              <Link to={"/"}>
-                <button
-                  onClick={() => localStorage.clear()}
-                  className="btn-exit"
-                >
-                  Sair
-                </button>
-              </Link>
-            </div>
-          </header>
 
-          <section className="section-dashboard">
-            <div className="section-itens">
-              <h3>Olá, {user.name} </h3>
-              <h3>{user.course_module}</h3>
-            </div>
-          </section>
-
-          <div className="modal">{isModalVisible ? <AddModal /> : null}</div>
-          <main className="main-dashboard">
-            <div className="header-techs">
-              <h1>Tecnologias</h1>
-              <button
-                className="btn-Add"
-                onClick={() => setIsModalVisible(true)}
-              >
-                +
+        <header className="header-dashboard">
+          <div className="container">
+            <img src={Logo} alt="LogoDashboard" />
+            <Link to={"/"}>
+              <button onClick={() => localStorage.clear()} className="btn-exit">
+                Sair
               </button>
-            </div>
+            </Link>
+          </div>
+        </header>
 
-            <div className="list-techs">
-              <TechsList />
-            </div>
-          </main>
-        </div>
+        <section className="section-dashboard">
+          <div className="section-itens">
+            <h3>Olá, {user.name} </h3>
+            <h3>{user.course_module}</h3>
+          </div>
+        </section>
+
+        <div className="modal">{isModalVisible ? <AddModal /> : null}</div>
+        <main className="main-dashboard">
+          <div className="header-techs">
+            <h1>Tecnologias</h1>
+            <button className="btn-Add" onClick={() => setIsModalVisible(true)}>
+              +
+            </button>
+          </div>
+
+          <div className="list-techs">
+            <TechsList />
+          </div>
+        </main>
       </ContainerDash>
     );
   }

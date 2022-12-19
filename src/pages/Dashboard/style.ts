@@ -1,24 +1,21 @@
 import styled from "styled-components";
 
 export const ContainerDash = styled.div`
-  .all-dashboard {
-  }
   .header-dashboard {
-    width: 100vw;
+    width: 100%;
     background: #121214;
     display: flex;
     align-items: center;
     height: 72px;
-    position: absolute;
     justify-content: center;
-    top: 0;
-    left: 0;
 
     .container {
       display: flex;
       align-items: center;
       justify-content: space-around;
       max-width: 1200px;
+      margin-top: 3rem;
+      height: 100%;
       width: 100%;
     }
   }
@@ -34,11 +31,7 @@ export const ContainerDash = styled.div`
   .section-dashboard {
     display: flex;
     background: #121214;
-    width: 100vw;
     height: 118px;
-    position: absolute;
-    top: 72px;
-    left: 0;
     align-items: center;
     justify-content: center;
 
@@ -54,9 +47,9 @@ export const ContainerDash = styled.div`
 
   .main-dashboard {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100vw;
 
     .header-techs {
       max-width: 1200px;
@@ -65,26 +58,23 @@ export const ContainerDash = styled.div`
       align-items: center;
       justify-content: space-around;
       color: white;
-      position: absolute;
-      top: 208px;
     }
     .list-techs {
       display: flex;
       max-width: 1200px;
-      width: 55%;
-      height: 65%;
+      width: 65%;
+      height: 350px;
+      gap: 1rem;
+      align-items: center;
       background: #212529;
       border-radius: 4px;
-      top: 294px;
       flex-direction: column;
       overflow-y: auto;
-      position: absolute;
-      overflow-x: hidden;
     }
 
     @media (max-width: 450px) {
       .list-techs {
-        width: 70%;
+        width: 85%;
       }
     }
   }
@@ -96,16 +86,6 @@ export const ContainerDash = styled.div`
     width: 32.49px;
     height: 32px;
     font-size: 17px;
-  }
-  .modal {
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    z-index: 10;
-    top: 5px;
-    box-sizing: border-box;
   }
 
   .list-techs::-webkit-scrollbar {

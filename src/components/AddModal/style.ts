@@ -2,14 +2,15 @@ import styled from "styled-components";
 
 const Container = styled.div`
   .Modal {
+    display: flex;
+    z-index: 9999;
     background: rgba(18, 18, 20, 0.5);
-    width: 100vw;
-    height: 100vh;
-
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 5px;
     align-items: center;
     justify-content: center;
-    display: flex;
-    box-sizing: border-box;
   }
 
   .Container {
