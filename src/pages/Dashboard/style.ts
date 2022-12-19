@@ -104,6 +104,11 @@ export const ContainerDash = styled.div`
 `;
 
 export const NotAuthenticate = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
   span {
     color: white;
     font-family: "Inter", sans-serif;
